@@ -47,8 +47,7 @@ message ADCConverter(unsigned int data)
 {
     dbgOutputLoc(SENSOR_QUEUE_ADC_CONVERTER_ENTER);
     
-    unsigned int distance;
-    distance = lookupTable[data >> 3];
+    unsigned int distance = lookupTable[data >> 3];//Reduce 1024 options down to 128
     message mess = {distance, {'c','e','n','t','i','m','e','t','e','r'}};
     
     dbgOutputLoc(SENSOR_QUEUE_ADC_CONVERTER_EXIT);

@@ -12,17 +12,22 @@ void initPorts(){
 }
 
 void dbgOutputVal(unsigned int outVal){
-//        ValueGPIODisplay(outVal);
-        PLIB_PORTS_Write(PORTS_ID_0, PORT_CHANNEL_E, outVal);    
+    if(outVal > LIMIT){//Too large
+        PLIB_PORTS_Write(PORTS_ID_0, PORT_CHANNEL_E, LIMIT);
+    }
+    else
+    {
+        PLIB_PORTS_Write(PORTS_ID_0, PORT_CHANNEL_E, outVal);  
+    }
 }
 
 void dbgOutputLoc(unsigned int outVal){
-    PLIB_PORTS_Write(PORTS_ID_0, PORT_CHANNEL_D, outVal);
-    if(outVal <= LIMIT){
-        // Output to a different set of IO Pins
-        // Pins need to be accessible when used with other boards
-//        EventGPIODisplay(outVal);
-        //PLIB_PORTS_Write(PORTS_ID_0, PORT_CHANNEL_D, outVal);
+    if(outVal > LIMIT){//Too large
+        PLIB_PORTS_Write(PORTS_ID_0, PORT_CHANNEL_D, LIMIT);
+    }
+    else
+    {
+        PLIB_PORTS_Write(PORTS_ID_0, PORT_CHANNEL_D, outVal);
     }
 }
 
@@ -38,7 +43,7 @@ void dbgError(){
     vTaskSuspendAll(); //suspends all tasks without stopping the interrupt
     taskENTER_CRITICAL(); //Disables interrupts
     EventGPIODisplay(ERROR_CODE);
-    PLIB_PORTS_PinClear(PORTS_ID_0, PORT_CHANNEL_A, 3);
+    PLIB_PORTS_PinClear(PORTS_ID_0, PORT_CHANNEL_A, 3);//Turn off the LED
     while(1); //stay in error state
 }
 

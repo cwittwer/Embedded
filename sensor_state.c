@@ -25,7 +25,6 @@ int sensor_state(int val, int sum, int state)
             ret = 0;
             break;
         default:
-            //
             dbgError();
             break;
     }

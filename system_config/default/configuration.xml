@@ -376,7 +376,7 @@
       <Template dnOrder="24">
         <Name dnOrder="0">drv_tmr_static.c</Name>
         <Path dnOrder="1">Source&amp;#160;Files/app/system_config/default/framework/driver/tmr/src</Path>
-        <Checksum dnOrder="2">293EE96ED0AC07F89C4AC2E121F02174</Checksum>
+        <Checksum dnOrder="2">FBA83BF0B978222FE9F1811BC15F5530</Checksum>
       </Template>
       <Template dnOrder="25">
         <Name dnOrder="0">rtos_hooks.c</Name>

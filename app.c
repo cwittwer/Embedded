@@ -11,7 +11,6 @@ void APP_Initialize ( void )
     
     DRV_ADC_Initialize();
     DRV_ADC_Open();
-    //DRV_ADC_Start();
     usartHandle = DRV_USART_Open(DRV_USART_INDEX_0, DRV_IO_INTENT_WRITE);
 }
 
