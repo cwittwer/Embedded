@@ -17,6 +17,21 @@
 #define ISR_BEFORE_Q_TX ((unsigned int) 6)
 #define ISR_AFTER_Q_TX ((unsigned int) 7)
 
+#define SENSOR_STATE_ENTER ((unsigned int) 8)
+#define SENSOR_STATE_EXIT ((unsigned int) 9)
+
+#define SENSOR_QUEUE_CREATE_QUEUE_ENTER ((unsigned int) 10)
+#define SENSOR_QUEUE_CREATE_QUEUE_EXIT ((unsigned int) 11)
+
+#define SENSOR_QUEUE_Q_POP_ENTER ((unsigned int) 12)
+#define SENSOR_QUEUE_Q_POP_EXIT ((unsigned int) 13)
+
+#define SENSOR_QUEUE_Q_PUSH_ENTER ((unsigned int) 14)
+#define SENSOR_QUEUE_Q_PUSH_EXIT ((unsigned int) 15)
+
+#define SENSOR_QUEUE_ADC_CONVERTER_ENTER ((unsigned int) 16)
+#define SENSOR_QUEUE_ADC_CONVERTER_EXIT ((unsigned int) 17)
+
 #define ERROR_CODE ((unsigned int)0xFFFFFFF)
 #define ERROR_STATE ((unsigned int) 66)
 

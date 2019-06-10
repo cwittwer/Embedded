@@ -1,7 +1,10 @@
 #include "sensor_state.h"
+#include "debug.h"
 
 int sensor_state(int val, int sum, int state)
 {
+    dbgOutputLoc(SENSOR_STATE_ENTER);
+    
     dbgOutputVal(val);
     int ret = 0;
     switch(state){
@@ -26,5 +29,8 @@ int sensor_state(int val, int sum, int state)
             dbgError();
             break;
     }
+    
+    dbgOutputLoc(SENSOR_STATE_EXIT);
+    
     return ret;
 }

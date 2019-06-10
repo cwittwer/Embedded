@@ -9,6 +9,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 
+DRV_HANDLE adcHandle;
 static DRV_HANDLE usartHandle;
 DRV_USART_BUFFER_HANDLE bufHandle;
 
