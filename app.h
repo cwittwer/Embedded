@@ -8,10 +8,11 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include <stdio.h>
+
+#define BAUD_RATE ((unsigned int) 9600)
 
 DRV_HANDLE adcHandle;
-static DRV_HANDLE usartHandle;
-DRV_USART_BUFFER_HANDLE bufHandle;
 
 void APP_Initialize ( void );
 

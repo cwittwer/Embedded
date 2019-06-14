@@ -1,5 +1,4 @@
 #include "sensor_state.h"
-#include "debug.h"
 
 int sensor_state(int val, int sum, int state)
 {
@@ -7,6 +6,7 @@ int sensor_state(int val, int sum, int state)
     
     dbgOutputVal(val);
     int ret = 0;
+    int avg = 0;
     switch(state){
         case(FIRST_VAL):
             ret = sum + val;
@@ -21,14 +21,13 @@ int sensor_state(int val, int sum, int state)
             ret = sum + val;
             break;
         case(FIFTH_VAL):
-            dbgUARTVal((sum + val)/AVG_OF);//Sends avg to UART
+            sendToUART((int)(sum + val)/AVG_OF);
             ret = 0;
             break;
         default:
             dbgError();
             break;
     }
-    
     dbgOutputLoc(SENSOR_STATE_EXIT);
     
     return ret;

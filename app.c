@@ -11,7 +11,12 @@ void APP_Initialize ( void )
     
     DRV_ADC_Initialize();
     DRV_ADC_Open();
-    usartHandle = DRV_USART_Open(DRV_USART_INDEX_0, DRV_IO_INTENT_WRITE);
+    DRV_ADC_Start();
+    
+    //UART Initialization
+    PLIB_USART_BaudRateSet (USART_ID_4, SYS_CLK_PeripheralFrequencyGet(CLK_BUS_PERIPHERAL_4), BAUD_RATE);
+    PLIB_USART_Enable(USART_ID_4);
+    PLIB_USART_TransmitterEnable (USART_ID_4);
 }
 
 void APP_Tasks ( void )

@@ -3,6 +3,7 @@
 
 #include "FreeRTOS.h"
 #include "queue.h"
+#include "debug.h"
 
 #define QLENGTH 10
 
