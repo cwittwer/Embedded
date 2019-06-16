@@ -6,31 +6,23 @@ void create_queue()
     
     xQ = xQueueCreate(QLENGTH, sizeof(message));
     if(xQ == NULL)
-    {
-        //Error: no queue created
-        dbgError();
-    }
+        dbgError("Queue Creation Error");//Error: no queue created
+    
     dbgOutputLoc(SENSOR_QUEUE_CREATE_QUEUE_EXIT);
 }
 
 message q_pop(message m)
 {  
     if(xQueueReceive(xQ, &m, portMAX_DELAY) != pdTRUE)
-    {
-        //Error: no message received
-        dbgError();
-    }
+        dbgError("No message received");//Error: no message received
     
     return m;
 }
 
-void q_push(message m)
+void q_push(message m, BaseType_t * pxHigherPriorityTaskWoken)
 {
-    if(xQueueSendFromISR(xQ, &m, pdFALSE) != pdTRUE)
-    {
-        //Error: no message sent; Queue may be full
-        dbgError();
-    }
+    if(xQueueSendFromISR(xQ, &m, pxHigherPriorityTaskWoken) != pdTRUE)
+        dbgError("No message sent"); //Error: no message sent; Queue may be full
 }
 
 message ADCConverter(unsigned int data)

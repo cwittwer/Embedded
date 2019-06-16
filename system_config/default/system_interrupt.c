@@ -17,7 +17,8 @@ void IntHandlerDrvTmrInstance0(void)
     
     dbgOutputLoc(ISR_BEFORE_Q_TX);
     
-    q_push(dist);
+    BaseType_t pxHigherPriorityTaskWoken = pdFALSE;
+    q_push(dist, &pxHigherPriorityTaskWoken);
     
     dbgOutputLoc(ISR_AFTER_Q_TX);
     
@@ -25,7 +26,7 @@ void IntHandlerDrvTmrInstance0(void)
     PLIB_INT_SourceFlagClear(INT_ID_0,INT_SOURCE_TIMER_2);
     PLIB_INT_SourceEnable(INT_ID_0, INT_SOURCE_TIMER_2);
 
-    portEND_SWITCHING_ISR(pdFALSE);
+    portEND_SWITCHING_ISR(pxHigherPriorityTaskWoken);
     
     dbgOutputLoc(ISR_EXIT);
 }

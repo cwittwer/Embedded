@@ -9,10 +9,9 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <string.h>
 
 #define BAUD_RATE ((unsigned int) 9600)
-
-DRV_HANDLE adcHandle;
 
 void APP_Initialize ( void );
 

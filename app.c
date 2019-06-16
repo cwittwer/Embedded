@@ -27,8 +27,11 @@ void APP_Tasks ( void )
     int st = 0;
     message mes;
     
-    dbgOutputLoc(APP_WHILE);
+#if 0
+    st = 6;
+#endif
     
+    dbgOutputLoc(APP_WHILE);
     while(1)
     {
         dbgOutputLoc(APP_BEFORE_Q_RX);

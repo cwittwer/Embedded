@@ -6,26 +6,19 @@ int sensor_state(int val, int sum, int state)
     
     dbgOutputVal(val);
     int ret = 0;
-    int avg = 0;
     switch(state){
         case(FIRST_VAL):
-            ret = sum + val;
-            break;
         case(SECOND_VAL):
-            ret = sum + val;
-            break;
         case(THIRD_VAL):
-            ret = sum + val;
-            break;
         case(FOURTH_VAL):
             ret = sum + val;
             break;
         case(FIFTH_VAL):
-            sendToUART((int)(sum + val)/AVG_OF);
+            sendToUART((int)(sum + val)/5);
             ret = 0;
             break;
         default:
-            dbgError();
+            dbgError("Invalid State");
             break;
     }
     dbgOutputLoc(SENSOR_STATE_EXIT);

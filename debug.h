@@ -5,10 +5,10 @@
 #include "system_definitions.h"
 
 //Initialization location codes
-#define SENSOR_QUEUE_CREATE_QUEUE_ENTER 0x00
-#define SENSOR_QUEUE_CREATE_QUEUE_EXIT 0x01
-#define INIT_PORTS_ENTER 0x02
-#define INIT_PORTS_EXIT 0x03
+#define SENSOR_QUEUE_CREATE_QUEUE_ENTER 0x01
+#define SENSOR_QUEUE_CREATE_QUEUE_EXIT 0x02
+#define INIT_PORTS_ENTER 0x03
+#define INIT_PORTS_EXIT 0x04
 
 //App task location codes
 #define APP_ENTER 0x10
@@ -26,20 +26,15 @@
 #define ISR_AFTER_Q_TX 0x24
 #define ISR_EXIT 0x25
 
-//Error codes
-#define ERROR_CODE ((unsigned int)0xFFFFFFF)
-#define ERROR_STATE ((unsigned int) 66)
-
-#define ERROR_QUEUE_CREATE ((unsigned int) 0)
+#define ERROR_STATE 0xFF
 
 #define LIMIT ((unsigned int) 127)
+#define MASK 0x0FF
 
 void initPorts();
 void dbgOutputVal(unsigned int outVal);
 void dbgUARTVal(unsigned char outVal);
 void dbgOutputLoc(unsigned int outVal);
-void ValueGPIODisplay(unsigned int outVal);
-void dbgError();
-void EventGPIODisplay(unsigned int outVal);
+void dbgError(char err[]);
 
 #endif	/* DEBUG_H */

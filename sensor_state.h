@@ -3,7 +3,6 @@
 
 #include "debug.h"
 
-#define AVG_OF 5
 #define FIRST_VAL 0
 #define SECOND_VAL 1
 #define THIRD_VAL 2
