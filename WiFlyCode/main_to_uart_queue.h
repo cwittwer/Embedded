@@ -12,7 +12,7 @@ static QueueHandle_t main_to_uart_handle;
 
 typedef struct
 {
-    unsigned int len;
+    bool get;
     char mess[MAIN_TO_UART_MLENGTH];
 } main_message;
 

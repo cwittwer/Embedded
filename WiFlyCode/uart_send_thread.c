@@ -28,31 +28,19 @@ void create_GET_String(char * result, char * source, int portNo) {
 * content   : The json object that is being sent to the server
 * portNo    : The port no of the server to send to
 */
-void create_POST_String(char * result, char * source, char * content, int portNo) {
+void create_PUT_String(char * result, char * source, char * content, int portNo) {
     char portString[10];
     sprintf(portString, "%d", portNo);
     int content_length = strlen(content);
     char content_length_string[10];
     sprintf(content_length_string, "%d", content_length);
-    strcpy(result, "POST /");
+    strcpy(result, "PUT /");
     strcat(result, source);
     strcat(result, " HTTP/1.1\r\nHost: 192.168.0.10:");
     strcat(result, portString);
-    strcat(result, "\r\nContent-Type : application/json\r\nContent-Length: ");
-    strcat(result, content_length_string);
-    strcat(result, "\r\n\r\n");
+    strcat(result, "\r\n");
     strcat(result, content);
     strcat(result, "\r\n\r\n");
-}
-
-char * format_message(char c[MAX_MESSAGE_LENGTH])
-{
-    char * res;
-    if(strcmp(c, "get")){
-        create_GET_String(res, "Loadcell", 5000);
-    } else
-        create_POST_String(res, "Loadcell", c, 5000);
-    return res;
 }
 
 void UART_SEND_THREAD_Initialize ( void )
@@ -71,32 +59,32 @@ void UART_SEND_THREAD_Initialize ( void )
     
     PLIB_PORTS_DirectionOutputSet(PORTS_ID_0, PORT_CHANNEL_A, 0x0FF);
     
-    dbgOutputLoc(UART_INITIALIZED);
+    dbgOutputLoc(UART_SEND_INITIALIZED);
 }
 
 void UART_SEND_THREAD_Tasks ( void )
 {
-    dbgOutputLoc(UART_ENTER);
+    dbgOutputLoc(UART_SEND_ENTER);
+    
+    int index = 0;                  //The index of the character being sent
+    int len = 0;                    //The length of the message being sent
+    char str[MAX_MESSAGE_LENGTH];   //The message to be sent
+    char * request;                 //The content of a PUT request
     
     while(1)
     {
-        dbgOutputLoc(UART_WHILE);
+        dbgOutputLoc(UART_SEND_WHILE);
 
-        //Pop the message and format an http get/push message
-        main_message mainMess = main_to_uart_pop();
-        char * req = mainMess.mess;
-
-        //char * str = "GET /Loadcell HTTP/1.1\r\nHost: 192.168.0.10:5000\r\n\r\n";
-        
-        char str[MAX_MESSAGE_LENGTH];
-        //if(strcmp(req, "get"))
-            create_GET_String(str, "Loadcell", 5000);
-
-        //Push the formatted message into the send queue byte by byte
-        int index = 0;
-        int len = strlen(str);
-
-        while(index < len){
+        if(index >= len){    //If theres no message being pushed to the queue
+            main_message mainMess = main_to_uart_pop();
+            if(mainMess.get)
+                create_GET_String(str, "WS", 5000);
+            else
+                create_PUT_String(str, "WS", mainMess.mess, 5000);
+            index = 0;
+            len = strlen(str);
+        }
+        else{
             uart_to_ISR_push(str[index]);
             SYS_INT_SourceEnable(INT_SOURCE_USART_1_TRANSMIT);
             ++index;

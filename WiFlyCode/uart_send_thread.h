@@ -5,8 +5,8 @@
 
 #include <string.h>
 
-void UART_THREAD_Initialize ( void );
+void UART_SEND_THREAD_Initialize ( void );
 
-void UART_THREAD_Tasks( void );
+void UART_SEND_THREAD_Tasks( void );
 
 #endif /* _UART_SEND_THREAD_H */

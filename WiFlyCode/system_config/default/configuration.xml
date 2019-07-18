@@ -282,6 +282,7 @@
         <Name dnOrder="0">FreeRTOSConfig.h</Name>
         <Path dnOrder="1">Header&amp;#160;Files/app/system_config/default</Path>
         <Checksum dnOrder="2">EA1C9BF2E112460D5C3702C93D91DF2D</Checksum>
+        <ProjectFileChecksum dnOrder="3">E81174A3DE7326CA9221F7471811609D</ProjectFileChecksum>
       </Template>
       <Template dnOrder="10">
         <Name dnOrder="0">drv_usart_static_byte_model.c</Name>
@@ -292,11 +293,12 @@
         <Name dnOrder="0">system_interrupt.c</Name>
         <Path dnOrder="1">Source&amp;#160;Files/app/system_config/default</Path>
         <Checksum dnOrder="2">DA9E902A00B564E24F03EBC9D450754B</Checksum>
+        <ProjectFileChecksum dnOrder="3">48F8A63140CEB15DFE7D6E38018AE917</ProjectFileChecksum>
       </Template>
       <Template dnOrder="12">
         <Name dnOrder="0">drv_usart_static.c</Name>
         <Path dnOrder="1">Source&amp;#160;Files/app/system_config/default/framework/driver/usart/src</Path>
-        <Checksum dnOrder="2">2A97DC0B40FF487A5FF3188233E4F50E</Checksum>
+        <Checksum dnOrder="2">4D9E08467292A59FEEB024B53B7B9F84</Checksum>
       </Template>
       <Template dnOrder="13">
         <Name dnOrder="0">system_init.c</Name>

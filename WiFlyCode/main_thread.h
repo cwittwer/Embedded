@@ -6,7 +6,6 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include <string.h>
 
 #include <FreeRTOS.h>
 #include <timers.h>

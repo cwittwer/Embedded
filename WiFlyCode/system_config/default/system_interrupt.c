@@ -15,9 +15,9 @@ void IntHandlerDrvUsartInstance0(void)
     {
         dbgOutputLoc(UART_ISR_SEND);
 
-        char pop = uart_to_ISR_pop(pxHigherPriorityTaskWoken);
+        char pop = uart_to_ISR_pop(&pxHigherPriorityTaskWoken);
         
-        if(!PLIB_USART_TransmitterBufferIsFull(USART_ID_1)){
+        if(!PLIB_USART_TransmitterBufferIsFull(USART_ID_1) && pop != NULL){
             PLIB_USART_TransmitterByteSend(USART_ID_1, pop);
             SYS_INT_SourceDisable(INT_SOURCE_USART_1_TRANSMIT);
             SYS_INT_SourceStatusClear(INT_SOURCE_USART_1_TRANSMIT);
@@ -29,9 +29,7 @@ void IntHandlerDrvUsartInstance0(void)
         
         //while theres something in the receive, read/push a byte
         while(PLIB_USART_ReceiverDataIsAvailable(USART_ID_1))
-        {
-            char c = PLIB_USART_ReceiverByteReceive(USART_ID_1);
-        }
+            ISR_to_uart_push(PLIB_USART_ReceiverByteReceive(USART_ID_1), &pxHigherPriorityTaskWoken);
                 
         SYS_INT_SourceStatusClear(INT_SOURCE_USART_1_RECEIVE);
     }

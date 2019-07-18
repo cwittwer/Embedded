@@ -14,7 +14,8 @@ char uart_to_ISR_pop(BaseType_t * const pxHigherPriorityTaskWoken)
     char temp;
     
     if(xQueueReceiveFromISR(uart_to_ISR_handle, &temp, pxHigherPriorityTaskWoken) != pdTRUE)
-        dbgError(QUEUE_RECEIVE_ERROR);//Error: no message received
+        return NULL;
+        //dbgError(QUEUE_RECEIVE_ERROR);//Error: no message received
     
     dbgOutputLoc(UART_TO_ISR_POP);
     
