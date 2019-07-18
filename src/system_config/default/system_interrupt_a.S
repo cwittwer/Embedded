@@ -53,9 +53,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
    .extern  IntHandlerDrvUsartInstance0
 
-   .section	.vector_24,code, keep
-   .equ     __vector_dispatch_24, IntVectorDrvUsartInstance0
-   .global  __vector_dispatch_24
+   .section	.vector_49,code, keep
+   .equ     __vector_dispatch_49, IntVectorDrvUsartInstance0
+   .global  __vector_dispatch_49
    .set     nomicromips
    .set     noreorder
    .set     nomips16

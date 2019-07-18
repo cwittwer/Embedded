@@ -82,7 +82,7 @@ uint8_t DRV_USART0_ReadByte(void)
     }
 
     /* Receive one byte */
-    readValue = PLIB_USART_ReceiverByteReceive(USART_ID_1);
+    readValue = PLIB_USART_ReceiverByteReceive(USART_ID_4);
 
     OSAL_MUTEX_Unlock(&(gDrvUSART0Obj.mutexDriverInstance));
 
@@ -107,10 +107,10 @@ void DRV_USART0_WriteByte(const uint8_t byte)
     }
 
     /* Wait till TX buffer is available as blocking operation is selected */
-    while(PLIB_USART_TransmitterBufferIsFull(USART_ID_1));
+    while(PLIB_USART_TransmitterBufferIsFull(USART_ID_4));
     /* Send one byte */
-    PLIB_USART_TransmitterByteSend(USART_ID_1, byte);
-    SYS_INT_SourceEnable(INT_SOURCE_USART_1_TRANSMIT);
+    PLIB_USART_TransmitterByteSend(USART_ID_4, byte);
+    SYS_INT_SourceEnable(INT_SOURCE_USART_4_TRANSMIT);
 
     OSAL_MUTEX_Unlock(&(dObj->mutexDriverInstance));
 }
@@ -128,13 +128,13 @@ unsigned int DRV_USART0_TransmitBufferSizeGet(void)
 bool DRV_USART0_ReceiverBufferIsEmpty( void )
 {
     /* Check the status of receiver buffer */
-    return(!PLIB_USART_ReceiverDataIsAvailable(USART_ID_1));
+    return(!PLIB_USART_ReceiverDataIsAvailable(USART_ID_4));
 }
 
 bool DRV_USART0_TransmitBufferIsFull(void)
 {
     /* Check the status of transmitter buffer */
-    return(PLIB_USART_TransmitterBufferIsFull(USART_ID_1));
+    return(PLIB_USART_TransmitterBufferIsFull(USART_ID_4));
 }
 
 /*******************************************************************************

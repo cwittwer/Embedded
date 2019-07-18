@@ -17,6 +17,7 @@
 #define APP_AFTER_Q_RX 0x13
 #define PIXY_STATE_ENTER 0x14
 #define PIXY_STATE_EXIT 0x15
+#define APP_SEND_DISTANCE 0x16
 
 //ISR location codes
 #define ISR_ENTER 0x20
@@ -39,6 +40,12 @@
 #define PIXY_WIDTH2 0x41
 #define PIXY_HEIGHT1 0x42
 #define PIXY_HEIGHT2 0x43
+
+#define ISR_TRANSMIT_ERROR 0x80
+#define ISR_ERROR 0x81
+#define QUEUE_CREATE_ERROR 0x82
+#define QUEUE_POP_ERROR 0x83
+#define QUEUE_PUSH_ERROR 0x84
 
 #define ERROR_STATE 0xFF
 

@@ -9,7 +9,7 @@ void create_queue()
     if(xQ == NULL)
     {
         //Error: no queue created
-        dbgError();
+        dbgError(QUEUE_CREATE_ERROR);
     }
     
     dbgOutputLoc(MY_QUEUE_CREATE_QUEUE_EXIT);
@@ -20,7 +20,7 @@ message q_pop(message m)
     if(xQueueReceive(xQ, &m, portMAX_DELAY) != pdTRUE)
     {
         //Error: no message received
-        dbgError();
+        dbgError(QUEUE_POP_ERROR);
     }
     
     return m;
@@ -31,16 +31,19 @@ void q_push(message m)
     if(xQueueSendFromISR(xQ, &m, pdFALSE) != pdTRUE)
     {
         //Error: no message sent; Queue may be full
-        dbgError();
+        dbgError(QUEUE_PUSH_ERROR);
     }
 }
 
-short combine_bytes(char first_byte, char second_byte)
+unsigned int block_distance(unsigned char pixy_width, unsigned char pixy_height)
 {
-    return (((short) second_byte << 8) | first_byte);
-}
-
-int block_distance(short width, short height)
-{
-    return 0;
+    int focal_length = 375;
+    int actual_width = 3;
+    int actual_height = 4;
+    
+    int distance_width = (actual_width * focal_length) / pixy_width;
+    int distance_height = (actual_height * focal_length) / pixy_height;
+    unsigned int actual_distance = (unsigned int) ((distance_width + distance_height) / 2);
+    
+    return actual_distance;
 }

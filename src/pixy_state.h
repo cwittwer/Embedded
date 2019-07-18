@@ -22,11 +22,11 @@
 typedef struct
 {
     int state;
-    char saved_byte;
-    char new_byte;
-    short pixel_width;
-    short pixel_height;
-    int distance;
+    unsigned char saved_byte;
+    unsigned char new_byte;
+    unsigned char pixel_width;
+    unsigned char pixel_height;
+    unsigned int distance;
 } state_values;
 
 state_values pixy_state(state_values app_struct);

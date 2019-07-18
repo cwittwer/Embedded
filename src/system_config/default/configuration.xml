@@ -238,7 +238,7 @@
       <Template dnOrder="0">
         <Name dnOrder="0">drv_usart_static.c</Name>
         <Path dnOrder="1">Source&amp;#160;Files/app/system_config/default/framework/driver/usart/src</Path>
-        <Checksum dnOrder="2">47AB14CF2F222972F40640B275AAF851</Checksum>
+        <Checksum dnOrder="2">E2644921BC081FF26868BBB413C39484</Checksum>
       </Template>
       <Template dnOrder="1">
         <Name dnOrder="0">sys_ports_static.c</Name>
@@ -248,7 +248,7 @@
       <Template dnOrder="2">
         <Name dnOrder="0">system_init.c</Name>
         <Path dnOrder="1">Source&amp;#160;Files/app/system_config/default</Path>
-        <Checksum dnOrder="2">BD8F30DF0DF5A0AEED4FCBEBA1025829</Checksum>
+        <Checksum dnOrder="2">7F86D7B980F8456904AB69F0C4B9438A</Checksum>
       </Template>
       <Template dnOrder="3">
         <Name dnOrder="0">main.c</Name>
@@ -257,7 +257,7 @@
       <Template dnOrder="4">
         <Name dnOrder="0">system_interrupt_a.S</Name>
         <Path dnOrder="1">Source&amp;#160;Files/app/system_config/default</Path>
-        <Checksum dnOrder="2">5C0D911C19B5E425D7F0FB89E579F457</Checksum>
+        <Checksum dnOrder="2">CF2A426E6352123ECCC821414C5DDF94</Checksum>
       </Template>
       <Template dnOrder="5">
         <Name dnOrder="0">system_definitions.h</Name>
@@ -316,7 +316,7 @@
       <Template dnOrder="16">
         <Name dnOrder="0">drv_usart_static_byte_model.c</Name>
         <Path dnOrder="1">Source&amp;#160;Files/app/system_config/default/framework/driver/usart/src</Path>
-        <Checksum dnOrder="2">E56B5A603F0427F96760518142226E69</Checksum>
+        <Checksum dnOrder="2">0CF51DBFB720C1CD0F35A7B043FF2407</Checksum>
       </Template>
       <Template dnOrder="17">
         <Name dnOrder="0">system_config.h</Name>

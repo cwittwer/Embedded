@@ -19,7 +19,6 @@ void create_queue();
 message q_pop(message m);
 void q_push(message m);
 
-short combine_bytes(char first_byte, char second_byte);
-int block_distance(short width, short height);
+unsigned int block_distance(unsigned char pixy_width, unsigned char pixy_height);
 
 #endif	/* MY_QUEUE_H */

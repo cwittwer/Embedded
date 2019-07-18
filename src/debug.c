@@ -24,20 +24,13 @@ void dbgOutputLoc(unsigned int outVal)
     PLIB_PORTS_Write(PORTS_ID_0, PORT_CHANNEL_E, outVal);
 }
 
-void dbgError(/*char err[]*/)
+void dbgError(unsigned int outVal)
 {
-  /*  vTaskSuspendAll(); //suspends all tasks without stopping the 
+    vTaskSuspendAll(); //suspends all tasks without stopping the 
     SYS_INT_Disable();
     taskENTER_CRITICAL(); //Disables interrupts
-    //Send the error code to the UART
-    int i = 0;
-    while(i < strlen(err))
-    {
-        dbgUARTVal(err[i]);
-        ++i;
-    }
-    
+    //Send the error code 
+    dbgOutputLoc(outVal);
     PLIB_PORTS_PinClear(PORTS_ID_0, PORT_CHANNEL_A, 3);//Turn off the LED
-    dbgOutputLoc(ERROR_STATE);
-    while(1); //stay in error state*/
+    while(1); //stay in error state
 }

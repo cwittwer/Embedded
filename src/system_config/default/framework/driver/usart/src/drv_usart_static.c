@@ -80,7 +80,7 @@ SYS_MODULE_OBJ DRV_USART0_Initialize(void)
     dObj = &gDrvUSART0Obj;
 
     /* Disable the USART module to configure it*/
-    PLIB_USART_Disable (USART_ID_1);
+    PLIB_USART_Disable (USART_ID_4);
 
     /* Create the hardware instance mutex. */
     if(OSAL_MUTEX_Create(&(dObj->mutexDriverInstance)) != OSAL_RESULT_TRUE)
@@ -89,7 +89,7 @@ SYS_MODULE_OBJ DRV_USART0_Initialize(void)
     }
 
     /* Initialize the USART based on configuration settings */
-    PLIB_USART_InitializeModeGeneral(USART_ID_1,
+    PLIB_USART_InitializeModeGeneral(USART_ID_4,
             false,  /*Auto baud*/
             false,  /*LoopBack mode*/
             false,  /*Auto wakeup on start*/
@@ -97,11 +97,11 @@ SYS_MODULE_OBJ DRV_USART0_Initialize(void)
             false);  /*Stop In Idle mode*/
 
     /* Set the line control mode */
-    PLIB_USART_LineControlModeSelect(USART_ID_1, DRV_USART_LINE_CONTROL_8NONE1);
+    PLIB_USART_LineControlModeSelect(USART_ID_4, DRV_USART_LINE_CONTROL_8NONE1);
 
     /* We set the receive interrupt mode to receive an interrupt whenever FIFO
        is not empty */
-    PLIB_USART_InitializeOperation(USART_ID_1,
+    PLIB_USART_InitializeOperation(USART_ID_4,
             USART_RECEIVE_FIFO_ONE_CHAR,
             USART_TRANSMIT_FIFO_IDLE,
             USART_ENABLE_TX_RX_USED);
@@ -110,20 +110,20 @@ SYS_MODULE_OBJ DRV_USART0_Initialize(void)
     clockSource = SYS_CLK_PeripheralFrequencyGet ( CLK_BUS_PERIPHERAL_1 );
 
     /* Set the baud rate and enable the USART */
-    PLIB_USART_BaudSetAndEnable(USART_ID_1,
+    PLIB_USART_BaudSetAndEnable(USART_ID_4,
             clockSource,
             9600);  /*Desired Baud rate value*/
 
     /* Clear the interrupts to be on the safer side*/
-    SYS_INT_SourceStatusClear(INT_SOURCE_USART_1_TRANSMIT);
-    SYS_INT_SourceStatusClear(INT_SOURCE_USART_1_RECEIVE);
-    SYS_INT_SourceStatusClear(INT_SOURCE_USART_1_ERROR);
+    SYS_INT_SourceStatusClear(INT_SOURCE_USART_4_TRANSMIT);
+    SYS_INT_SourceStatusClear(INT_SOURCE_USART_4_RECEIVE);
+    SYS_INT_SourceStatusClear(INT_SOURCE_USART_4_ERROR);
 
     /* Enable the error interrupt source */
-    SYS_INT_SourceEnable(INT_SOURCE_USART_1_ERROR);
+    SYS_INT_SourceEnable(INT_SOURCE_USART_4_ERROR);
 
     /* Enable the Receive interrupt source */
-    SYS_INT_SourceEnable(INT_SOURCE_USART_1_RECEIVE);
+    SYS_INT_SourceEnable(INT_SOURCE_USART_4_RECEIVE);
 
     /* Return the driver instance value*/
     return (SYS_MODULE_OBJ)DRV_USART_INDEX_0;
@@ -144,14 +144,14 @@ void  DRV_USART0_Deinitialize(void)
     }
 
     /* Disable the interrupts */
-    status = SYS_INT_SourceDisable(INT_SOURCE_USART_1_TRANSMIT) ;
-    status = SYS_INT_SourceDisable(INT_SOURCE_USART_1_RECEIVE) ;
-    status = SYS_INT_SourceDisable(INT_SOURCE_USART_1_ERROR);
+    status = SYS_INT_SourceDisable(INT_SOURCE_USART_4_TRANSMIT) ;
+    status = SYS_INT_SourceDisable(INT_SOURCE_USART_4_RECEIVE) ;
+    status = SYS_INT_SourceDisable(INT_SOURCE_USART_4_ERROR);
     /* Ignore the warning */
     (void)status;
 
     /* Disable USART module */
-    PLIB_USART_Disable (USART_ID_1);
+    PLIB_USART_Disable (USART_ID_4);
 
 }
 
@@ -170,13 +170,13 @@ void DRV_USART0_TasksTransmit(void)
        interrupt is active and performs respective action*/
 
     /* Reading the transmit interrupt flag */
-    if(SYS_INT_SourceStatusGet(INT_SOURCE_USART_1_TRANSMIT))
+    if(SYS_INT_SourceStatusGet(INT_SOURCE_USART_4_TRANSMIT))
     {
         /* Disable the interrupt, to avoid calling ISR continuously*/
-        SYS_INT_SourceDisable(INT_SOURCE_USART_1_TRANSMIT);
+        SYS_INT_SourceDisable(INT_SOURCE_USART_4_TRANSMIT);
 
         /* Clear up the interrupt flag */
-        SYS_INT_SourceStatusClear(INT_SOURCE_USART_1_TRANSMIT);
+        SYS_INT_SourceStatusClear(INT_SOURCE_USART_4_TRANSMIT);
     }
 }
 
@@ -187,11 +187,11 @@ void DRV_USART0_TasksReceive(void)
      */
 
     /* Reading the receive interrupt flag */
-    if(SYS_INT_SourceStatusGet(INT_SOURCE_USART_1_RECEIVE))
+    if(SYS_INT_SourceStatusGet(INT_SOURCE_USART_4_RECEIVE))
     {
 
         /* Clear up the interrupt flag */
-        SYS_INT_SourceStatusClear(INT_SOURCE_USART_1_RECEIVE);
+        SYS_INT_SourceStatusClear(INT_SOURCE_USART_4_RECEIVE);
     }
 }
 
@@ -203,11 +203,11 @@ void DRV_USART0_TasksError(void)
      * condition is cleared.  */
 
     /* Reading the error interrupt flag */
-    if(SYS_INT_SourceStatusGet(INT_SOURCE_USART_1_ERROR))
+    if(SYS_INT_SourceStatusGet(INT_SOURCE_USART_4_ERROR))
     {
         /* This means an error has occurred */
         /* Clear up the error interrupt flag */
-        SYS_INT_SourceStatusClear(INT_SOURCE_USART_1_ERROR);
+        SYS_INT_SourceStatusClear(INT_SOURCE_USART_4_ERROR);
     }
 }
 
@@ -234,7 +234,7 @@ DRV_USART_TRANSFER_STATUS DRV_USART0_TransferStatus( void )
     DRV_USART_TRANSFER_STATUS result = 0;
 
     /* Check if RX data available */
-    if(PLIB_USART_ReceiverDataIsAvailable(USART_ID_1))
+    if(PLIB_USART_ReceiverDataIsAvailable(USART_ID_4))
     {
         result|= DRV_USART_TRANSFER_STATUS_RECEIVER_DATA_PRESENT;
     }
@@ -244,13 +244,13 @@ DRV_USART_TRANSFER_STATUS DRV_USART0_TransferStatus( void )
     }
 
     /* Check if TX Buffer is empty */
-    if(PLIB_USART_TransmitterIsEmpty(USART_ID_1))
+    if(PLIB_USART_TransmitterIsEmpty(USART_ID_4))
     {
         result|= DRV_USART_TRANSFER_STATUS_TRANSMIT_EMPTY;
     }
 
     /* Check if the TX buffer is full */
-    if(PLIB_USART_TransmitterBufferIsFull(USART_ID_1))
+    if(PLIB_USART_TransmitterBufferIsFull(USART_ID_4))
     {
         result|= DRV_USART_TRANSFER_STATUS_TRANSMIT_FULL;
     }
@@ -278,15 +278,15 @@ void _DRV_USART0_ErrorConditionClear()
     uint8_t RXlength = _DRV_USART_RX_DEPTH;
 
     /* If it's a overrun error then clear it to flush FIFO */
-    if(USART_ERROR_RECEIVER_OVERRUN & PLIB_USART_ErrorsGet(USART_ID_1))
+    if(USART_ERROR_RECEIVER_OVERRUN & PLIB_USART_ErrorsGet(USART_ID_4))
     {
-        PLIB_USART_ReceiverOverrunErrorClear(USART_ID_1);
+        PLIB_USART_ReceiverOverrunErrorClear(USART_ID_4);
     }
 
     /* Read existing error bytes from FIFO to clear parity and framing error flags*/
-    while( (USART_ERROR_PARITY | USART_ERROR_FRAMING) & PLIB_USART_ErrorsGet(USART_ID_1) )
+    while( (USART_ERROR_PARITY | USART_ERROR_FRAMING) & PLIB_USART_ErrorsGet(USART_ID_4) )
     {
-        dummyData = PLIB_USART_ReceiverByteReceive(USART_ID_1);
+        dummyData = PLIB_USART_ReceiverByteReceive(USART_ID_4);
         RXlength--;
 
         /* Try to flush error bytes for one full FIFO and exit instead of
@@ -301,11 +301,11 @@ void _DRV_USART0_ErrorConditionClear()
     (void)dummyData;
 
     /* Clear error interrupt flag */
-    SYS_INT_SourceStatusClear(INT_SOURCE_USART_1_ERROR);
+    SYS_INT_SourceStatusClear(INT_SOURCE_USART_4_ERROR);
 
     /* Clear up the receive interrupt flag so that RX interrupt is not
      * triggered for error bytes*/
-    SYS_INT_SourceStatusClear(INT_SOURCE_USART_1_RECEIVE);
+    SYS_INT_SourceStatusClear(INT_SOURCE_USART_4_RECEIVE);
 }
 
 
@@ -340,26 +340,26 @@ DRV_USART_BAUD_SET_RESULT DRV_USART0_BaudSet(uint32_t baud)
     brgValueHigh = ( (clockSource/baud) >> 2 ) - 1;
 
 #if defined (PLIB_USART_ExistsModuleBusyStatus)
-        isEnabled = PLIB_USART_ModuleIsBusy (USART_ID_1);
+        isEnabled = PLIB_USART_ModuleIsBusy (USART_ID_4);
         if (isEnabled)
         {
-            PLIB_USART_Disable (USART_ID_1);
-            while (PLIB_USART_ModuleIsBusy (USART_ID_1));
+            PLIB_USART_Disable (USART_ID_4);
+            while (PLIB_USART_ModuleIsBusy (USART_ID_4));
         }
 #endif
 
     /* Check if the baud value can be set with high baud settings */
     if ((brgValueHigh >= 0) && (brgValueHigh <= UINT16_MAX))
     {
-        PLIB_USART_BaudRateHighEnable(USART_ID_1);
-        PLIB_USART_BaudRateHighSet(USART_ID_1,clockSource,baud);
+        PLIB_USART_BaudRateHighEnable(USART_ID_4);
+        PLIB_USART_BaudRateHighSet(USART_ID_4,clockSource,baud);
     }
 
     /* Check if the baud value can be set with low baud settings */
     else if ((brgValueLow >= 0) && (brgValueLow <= UINT16_MAX))
     {
-        PLIB_USART_BaudRateHighDisable(USART_ID_1);
-        PLIB_USART_BaudRateSet(USART_ID_1, clockSource, baud);
+        PLIB_USART_BaudRateHighDisable(USART_ID_4);
+        PLIB_USART_BaudRateSet(USART_ID_4, clockSource, baud);
     }
     else
     {
@@ -369,7 +369,7 @@ DRV_USART_BAUD_SET_RESULT DRV_USART0_BaudSet(uint32_t baud)
 #if defined (PLIB_USART_ExistsModuleBusyStatus)
     if (isEnabled)
     {
-        PLIB_USART_Enable (USART_ID_1);
+        PLIB_USART_Enable (USART_ID_4);
     }
 #endif
     /* Unlock Mutex */
@@ -395,21 +395,21 @@ DRV_USART_LINE_CONTROL_SET_RESULT DRV_USART0_LineControlSet(DRV_USART_LINE_CONTR
         return DRV_USART_LINE_CONTROL_SET_ERROR;
     }
 #if defined (PLIB_USART_ExistsModuleBusyStatus)
-        isEnabled = PLIB_USART_ModuleIsBusy (USART_ID_1);
+        isEnabled = PLIB_USART_ModuleIsBusy (USART_ID_4);
         if (isEnabled)
         {
-            PLIB_USART_Disable (USART_ID_1);
-            while (PLIB_USART_ModuleIsBusy (USART_ID_1));
+            PLIB_USART_Disable (USART_ID_4);
+            while (PLIB_USART_ModuleIsBusy (USART_ID_4));
         }
 #endif
 
     /* Set the Line Control Mode */
-    PLIB_USART_LineControlModeSelect(USART_ID_1, lineControlMode);
+    PLIB_USART_LineControlModeSelect(USART_ID_4, lineControlMode);
 
 #if defined (PLIB_USART_ExistsModuleBusyStatus)
         if (isEnabled)
         {
-            PLIB_USART_Enable (USART_ID_1);
+            PLIB_USART_Enable (USART_ID_4);
         }
 #endif
     OSAL_MUTEX_Unlock(&(gDrvUSART0Obj.mutexDriverInstance));
