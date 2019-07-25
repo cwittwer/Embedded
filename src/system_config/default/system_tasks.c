@@ -54,7 +54,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include "system_config.h"
 #include "system_definitions.h"
-#include "app.h"
+#include "pixy_thread.h"
+#include "uart_send_thread.h"
+#include "uart_receive_thread.h"
 
 
 // *****************************************************************************
@@ -68,7 +70,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 static void _SYS_Tasks ( void );
  
  
-static void _APP_Tasks(void);
+static void _PIXY_THREAD_Tasks(void);
+static void _UART_SEND_THREAD_Tasks(void);
+static void _UART_RECEIVE_THREAD_Tasks(void);
 
 
 // *****************************************************************************
@@ -94,9 +98,19 @@ void SYS_Tasks ( void )
 
  
  
-    /* Create OS Thread for APP Tasks. */
-    xTaskCreate((TaskFunction_t) _APP_Tasks,
-                "APP Tasks",
+    /* Create OS Thread for PIXY_THREAD Tasks. */
+    xTaskCreate((TaskFunction_t) _PIXY_THREAD_Tasks,
+                "PIXY_THREAD Tasks",
+                1024, NULL, 1, NULL);
+
+    /* Create OS Thread for UART_SEND_THREAD Tasks. */
+    xTaskCreate((TaskFunction_t) _UART_SEND_THREAD_Tasks,
+                "UART_SEND_THREAD Tasks",
+                1024, NULL, 1, NULL);
+
+    /* Create OS Thread for UART_RECEIVE_THREAD Tasks. */
+    xTaskCreate((TaskFunction_t) _UART_RECEIVE_THREAD_Tasks,
+                "UART_RECEIVE_THREAD Tasks",
                 1024, NULL, 1, NULL);
 
     /**************
@@ -126,6 +140,7 @@ static void _SYS_Tasks ( void)
         /* Maintain Middleware */
 
         /* Task Delay */
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
 
@@ -134,17 +149,51 @@ static void _SYS_Tasks ( void)
 
 /*******************************************************************************
   Function:
-    void _APP_Tasks ( void )
+    void _PIXY_THREAD_Tasks ( void )
 
   Summary:
-    Maintains state machine of APP.
+    Maintains state machine of PIXY_THREAD.
 */
 
-static void _APP_Tasks(void)
+static void _PIXY_THREAD_Tasks(void)
 {
     while(1)
     {
-        APP_Tasks();
+        PIXY_THREAD_Tasks();
+    }
+}
+
+
+/*******************************************************************************
+  Function:
+    void _UART_SEND_THREAD_Tasks ( void )
+
+  Summary:
+    Maintains state machine of UART_SEND_THREAD.
+*/
+
+static void _UART_SEND_THREAD_Tasks(void)
+{
+    while(1)
+    {
+        UART_SEND_THREAD_Tasks();
+    }
+}
+
+
+/*******************************************************************************
+  Function:
+    void _UART_RECEIVE_THREAD_Tasks ( void )
+
+  Summary:
+    Maintains state machine of UART_RECEIVE_THREAD.
+*/
+
+static void _UART_RECEIVE_THREAD_Tasks(void)
+{
+    while(1)
+    {
+        UART_RECEIVE_THREAD_Tasks();
     }
 }
 

@@ -1,20 +1,18 @@
 #include "pixy_state.h"
 
 state_values pixy_state(state_values app_struct)
-{
+{    
+    dbgOutputVal(110);
     dbgOutputLoc(PIXY_STATE_ENTER);
-//    dbgOutputVal(app_struct.new_byte);
     
     switch(app_struct.state){
         case(INITIAL):
             dbgOutputLoc(PIXY_INITIAL);
             if(app_struct.new_byte == (char) 0x55)
                 app_struct.state = SYNC;
-//            dbgOutputVal(app_struct.new_byte);
             break;
         case(SYNC):
             dbgOutputLoc(PIXY_SYNC);
-//            dbgOutputVal(app_struct.new_byte);
             if(app_struct.new_byte == 0xAA)
                 app_struct.state = CHECK_SUM_1;
             else
@@ -22,7 +20,6 @@ state_values pixy_state(state_values app_struct)
             break;
         case(CHECK_SUM_1):
             dbgOutputLoc(PIXY_CHECKSUM1);
-//            dbgOutputVal(app_struct.new_byte);
             if(app_struct.saved_byte == 0x55 && app_struct.new_byte == 0xAA)
                 app_struct.state = CHECK_SUM_1;
             else
@@ -40,7 +37,6 @@ state_values pixy_state(state_values app_struct)
             break;
         case(SIGNATURE_1):
             dbgOutputLoc(PIXY_SIGNATURE1);
-            dbgOutputVal(app_struct.new_byte);
             if(app_struct.saved_byte == (char) 0x55 && app_struct.new_byte == 0xAA)
                 app_struct.state = CHECK_SUM_1;
             else
@@ -51,14 +47,15 @@ state_values pixy_state(state_values app_struct)
             break;
         case(SIGNATURE_2):
             dbgOutputLoc(PIXY_SIGNATURE2);
-//            dbgOutputVal(app_struct.new_byte);
             if(app_struct.saved_byte == (char) 0x55 && app_struct.new_byte == 0xAA)
                 app_struct.state = CHECK_SUM_1;
             else
             {
-//                dbgOutputVal(app_struct.new_byte);
-                if(app_struct.saved_byte == 0x01 || app_struct.saved_byte == 0x02) //check signatures
+                if(app_struct.saved_byte == 0x01 || app_struct.saved_byte == 0x02 || app_struct.saved_byte == 0x03 || app_struct.saved_byte == 0x04) //check signatures
+                {
+                    app_struct.signature = app_struct.saved_byte;
                     app_struct.state = X_CENTER_1;
+                }
                 else
                     app_struct.state = INITIAL;
             }
@@ -93,6 +90,7 @@ state_values pixy_state(state_values app_struct)
             break;
         case(WIDTH_1):
             dbgOutputLoc(PIXY_WIDTH1);
+//            dbgOutputVal(app_struct.new_byte);
             if(app_struct.saved_byte == (char) 0x55 && app_struct.new_byte == 0xAA)
                 app_struct.state = CHECK_SUM_1;
             else
@@ -103,6 +101,7 @@ state_values pixy_state(state_values app_struct)
             break;
         case(WIDTH_2):
             dbgOutputLoc(PIXY_WIDTH2);
+//            dbgOutputVal(app_struct.new_byte);
             if(app_struct.saved_byte == (char) 0x55 && app_struct.new_byte == 0xAA)
                 app_struct.state = CHECK_SUM_1;
             else
@@ -113,6 +112,7 @@ state_values pixy_state(state_values app_struct)
             break;
         case(HEIGHT_1):
             dbgOutputLoc(PIXY_HEIGHT1);
+//            dbgOutputVal(app_struct.new_byte);
             if(app_struct.saved_byte == (char) 0x55 && app_struct.new_byte == 0xAA)
                 app_struct.state = CHECK_SUM_1;
             else
@@ -124,10 +124,10 @@ state_values pixy_state(state_values app_struct)
         case(HEIGHT_2):
             dbgOutputLoc(PIXY_HEIGHT2);
             app_struct.pixel_height = app_struct.saved_byte;
-            app_struct.distance = block_distance(app_struct.pixel_width, app_struct.pixel_height);
-            
-            //dbgOutputVal(app_struct.distance);
-                
+            if(app_struct.signature == 0x04)
+                app_struct.distance = dump_distance(app_struct.pixel_width, app_struct.pixel_height);
+            else
+                app_struct.distance = block_distance(app_struct.pixel_width, app_struct.pixel_height);                
             app_struct.state = INITIAL;
             break;
         default:
@@ -136,5 +136,6 @@ state_values pixy_state(state_values app_struct)
     
     dbgOutputLoc(PIXY_STATE_EXIT);
     
+    dbgOutputVal(150);
     return app_struct;
 }

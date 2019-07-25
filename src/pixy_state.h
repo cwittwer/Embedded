@@ -2,7 +2,7 @@
 #define	PIXY_STATE_H
 
 #include "debug.h"
-#include "my_queue.h"
+#include "pixy_queue.h"
 
 #define INITIAL 0
 #define SYNC 1
@@ -26,6 +26,7 @@ typedef struct
     unsigned char new_byte;
     unsigned char pixel_width;
     unsigned char pixel_height;
+    unsigned char signature;
     unsigned int distance;
 } state_values;
 

@@ -56,7 +56,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "system/ports/sys_ports.h"
 #include "FreeRTOS.h"
 #include "task.h"
-#include "app.h"
+#include "pixy_thread.h"
+#include "uart_send_thread.h"
+#include "uart_receive_thread.h"
 
 
 // DOM-IGNORE-BEGIN
@@ -92,6 +94,7 @@ typedef struct
 {
 
     SYS_MODULE_OBJ  drvUsart0;
+    SYS_MODULE_OBJ  drvUsart1;
 
 } SYSTEM_OBJECTS;
 

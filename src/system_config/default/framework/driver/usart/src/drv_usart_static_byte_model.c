@@ -82,7 +82,7 @@ uint8_t DRV_USART0_ReadByte(void)
     }
 
     /* Receive one byte */
-    readValue = PLIB_USART_ReceiverByteReceive(USART_ID_4);
+    readValue = PLIB_USART_ReceiverByteReceive(USART_ID_1);
 
     OSAL_MUTEX_Unlock(&(gDrvUSART0Obj.mutexDriverInstance));
 
@@ -107,10 +107,10 @@ void DRV_USART0_WriteByte(const uint8_t byte)
     }
 
     /* Wait till TX buffer is available as blocking operation is selected */
-    while(PLIB_USART_TransmitterBufferIsFull(USART_ID_4));
+    while(PLIB_USART_TransmitterBufferIsFull(USART_ID_1));
     /* Send one byte */
-    PLIB_USART_TransmitterByteSend(USART_ID_4, byte);
-    SYS_INT_SourceEnable(INT_SOURCE_USART_4_TRANSMIT);
+    PLIB_USART_TransmitterByteSend(USART_ID_1, byte);
+    SYS_INT_SourceEnable(INT_SOURCE_USART_1_TRANSMIT);
 
     OSAL_MUTEX_Unlock(&(dObj->mutexDriverInstance));
 }
@@ -128,10 +128,89 @@ unsigned int DRV_USART0_TransmitBufferSizeGet(void)
 bool DRV_USART0_ReceiverBufferIsEmpty( void )
 {
     /* Check the status of receiver buffer */
-    return(!PLIB_USART_ReceiverDataIsAvailable(USART_ID_4));
+    return(!PLIB_USART_ReceiverDataIsAvailable(USART_ID_1));
 }
 
 bool DRV_USART0_TransmitBufferIsFull(void)
+{
+    /* Check the status of transmitter buffer */
+    return(PLIB_USART_TransmitterBufferIsFull(USART_ID_1));
+}
+
+extern DRV_USART_OBJ  gDrvUSART1Obj ;
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: Instance 1 static driver functions
+// *****************************************************************************
+// *****************************************************************************
+
+uint8_t DRV_USART1_ReadByte(void)
+{
+    uint8_t readValue;
+	
+    /* This function needs to be thread safe */
+    if(OSAL_MUTEX_Lock(&(gDrvUSART1Obj.mutexDriverInstance), OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+    {
+        /* We were able to take the mutex */
+    }
+    else
+    {
+        SYS_DEBUG_MESSAGE(SYS_ERROR_DEBUG, "\r\nUSART Driver: Hardware Instance Mutex Time out in DRV_USART_ReadByte() function");
+        return 0;
+    }
+
+    /* Receive one byte */
+    readValue = PLIB_USART_ReceiverByteReceive(USART_ID_4);
+
+    OSAL_MUTEX_Unlock(&(gDrvUSART1Obj.mutexDriverInstance));
+
+
+    return readValue;
+}
+
+void DRV_USART1_WriteByte(const uint8_t byte)
+{
+    DRV_USART_OBJ *dObj = (DRV_USART_OBJ*)NULL;
+
+    dObj = &gDrvUSART1Obj;
+
+    /* This function needs to be thread safe */
+    if(OSAL_MUTEX_Lock(&(dObj->mutexDriverInstance), OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+    {
+        /* We were able to take the mutex */
+    }
+    else
+    {
+        SYS_DEBUG_MESSAGE(SYS_ERROR_DEBUG, "\r\nUSART Driver: Hardware Instance Mutex Time out in DRV_USART_WriteByte() function");
+    }
+
+    /* Wait till TX buffer is available as blocking operation is selected */
+    while(PLIB_USART_TransmitterBufferIsFull(USART_ID_4));
+    /* Send one byte */
+    PLIB_USART_TransmitterByteSend(USART_ID_4, byte);
+    SYS_INT_SourceEnable(INT_SOURCE_USART_4_TRANSMIT);
+
+    OSAL_MUTEX_Unlock(&(dObj->mutexDriverInstance));
+}
+
+unsigned int DRV_USART1_ReceiverBufferSizeGet(void)
+{
+    return 8;
+}
+
+unsigned int DRV_USART1_TransmitBufferSizeGet(void)
+{
+    return 8;
+}
+
+bool DRV_USART1_ReceiverBufferIsEmpty( void )
+{
+    /* Check the status of receiver buffer */
+    return(!PLIB_USART_ReceiverDataIsAvailable(USART_ID_4));
+}
+
+bool DRV_USART1_TransmitBufferIsFull(void)
 {
     /* Check the status of transmitter buffer */
     return(PLIB_USART_TransmitterBufferIsFull(USART_ID_4));

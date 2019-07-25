@@ -91,7 +91,7 @@ extern "C" {
 #define SYS_PORT_AD1PCFG        ~0xffff
 #define SYS_PORT_CNPUE          0x0
 #define SYS_PORT_CNEN           0x0
-#define SYS_PORT_A_TRIS         0xFFF7
+#define SYS_PORT_A_TRIS         0xFFFF
 #define SYS_PORT_A_LAT          0x0000
 #define SYS_PORT_A_ODC          0x0000
 
@@ -103,11 +103,11 @@ extern "C" {
 #define SYS_PORT_C_LAT          0x0000
 #define SYS_PORT_C_ODC          0x0000
 
-#define SYS_PORT_D_TRIS         0xF7FF
+#define SYS_PORT_D_TRIS         0xFFFF
 #define SYS_PORT_D_LAT          0x0000
 #define SYS_PORT_D_ODC          0x0000
 
-#define SYS_PORT_E_TRIS         0xFF00
+#define SYS_PORT_E_TRIS         0xFFFF
 #define SYS_PORT_E_LAT          0x0000
 #define SYS_PORT_E_ODC          0x0000
 
@@ -131,8 +131,8 @@ extern "C" {
 // *****************************************************************************
 /* USART Driver Configuration Options
 */
-#define DRV_USART_INSTANCES_NUMBER                  1
-#define DRV_USART_CLIENTS_NUMBER                    1
+#define DRV_USART_INSTANCES_NUMBER                  2
+#define DRV_USART_CLIENTS_NUMBER                    2
 #define DRV_USART_INTERRUPT_MODE                    true
 #define DRV_USART_BYTE_MODEL_SUPPORT                true
 #define DRV_USART_READ_WRITE_MODEL_SUPPORT          false
@@ -157,6 +157,10 @@ extern "C" {
 
 
 /*** Application Instance 0 Configuration ***/
+
+/*** Application Instance 1 Configuration ***/
+
+/*** Application Instance 2 Configuration ***/
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus

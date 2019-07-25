@@ -54,7 +54,7 @@
 #define configISR_STACK_SIZE                    ( 400 )
 #define configSUPPORT_DYNAMIC_ALLOCATION        1
 #define configSUPPORT_STATIC_ALLOCATION         0
-#define configTOTAL_HEAP_SIZE                   ( ( size_t ) 20480 )
+#define configTOTAL_HEAP_SIZE                   ( ( size_t ) 81920 )
 #define configMAX_TASK_NAME_LEN                 ( 16 )
 #define configUSE_16_BIT_TICKS                  0
 #define configIDLE_SHOULD_YIELD                 1
@@ -85,10 +85,10 @@
 #define configMAX_CO_ROUTINE_PRIORITIES         2
 
 /* Software timer related definitions. */
-#define configUSE_TIMERS                        0
-#define configTIMER_TASK_PRIORITY               
-#define configTIMER_QUEUE_LENGTH                
-#define configTIMER_TASK_STACK_DEPTH            
+#define configUSE_TIMERS                        1
+#define configTIMER_TASK_PRIORITY               1
+#define configTIMER_QUEUE_LENGTH                10
+#define configTIMER_TASK_STACK_DEPTH            configMINIMAL_STACK_SIZE
 #define configUSE_DAEMON_TASK_STARTUP_HOOK      0
 
 /* Misc */
